@@ -1,0 +1,577 @@
+---
+title: "Maths for Computing - Lecture 4"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(knitr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+## Introduction
+
+The objectives for today are:
+
+ - Learn to compute determinants;
+ 
+ - Define the concept of inverse of a matrix;
+ 
+ - Identify the minors and the rank of a matrix;
+ 
+ - Determine the eigenvalues and eigenvectors of a matrix;
+ 
+ - Discuss the concept of matrix factorizations.
+ 
+## The Determinant
+
+![](https://youtu.be/kNr2jDWjyIs)
+
+Let $\boldsymbol{A}$ be a $n\times n$ matrix.
+
+The expansion of $|\boldsymbol{A}|$ in terms of the elements of the ith row is given by
+$$
+|\boldsymbol{A}|=a_{i,1}C_{i,1}+a_{i,2}C_{i,2}+\cdots + a_{i,n}C_{i,n},
+$$
+where $C_{i,j}$ is a *cofactor*.
+
+
+A cofactor $C_{i,j}$ can be found as follows:
+
+ - Delete the i-th row and the j-th column from $\boldsymbol{A}$ and compute its determinant
+
+ - Multiply the determinant by the factor $(-1)^{i+j}$
+
+### An example
+
+Consider the matrix 
+$$
+\boldsymbol{A}=\left(
+\begin{matrix}
+3 & 0 & 0 &2 \\
+6 & 1 & c &2 \\
+-1 & 1 & 0 & 0 \\
+5 & 2 & 0 & 3
+\end{matrix}
+\right)
+$$
+
+ - What is $C_{2,3}$? 
+
+$C_{2,3}$ is the determinant of the submatrix of $\boldsymbol{A}$ obtained by deleting the second row and the third column multiplied by $(-1)^{2+3}=-1$. So we need to compute
+
+$$
+\det\left(
+\begin{matrix}
+3 & 0 & 2\\
+-1 & 1 & 0\\
+5 & 2 & 3
+\end{matrix}
+\right)
+$$
+
+To compute this determinant we can consider an expansion over any row or column. A convenient choice is one where there is one zero (for instance the first row or the third column). Let's pick the first row
+
+\begin{align*}
+\det\left(
+\begin{matrix}
+3 & 0 & 2\\
+-1 & 1 & 0\\
+5 & 2 & 3
+\end{matrix}
+\right) & = 3\cdot (-1)^{1+1}\det\left(\begin{matrix}1 &0\\ 2 & 3\end{matrix}\right) + 0\cdot (-1)^{1+2}\det\left(\begin{matrix} -1 &0\\ 5 & 3\end{matrix}\right) + 2\cdot (-1)^{1+3}\det\left(\begin{matrix}-1 &1\\ 5 & 2\end{matrix}\right)\\
+&= 3(3 - 0) + 2(-2 -5)= 9 - 14 = -5
+\end{align*}
+
+Thus $C_{2,3}=(-1)\cdot(-5)=5$.
+
+ - What is $|\boldsymbol{A}|$?
+ 
+We can take advantage of having already computed $C_{2,3}$. Furthermore, although we can compute the determinant by expanding over any row or column, choosing the third column is a particularly smart choice since this has only one non-zero entry. Indeed
+$$
+|\boldsymbol{A}|= a_{1,3}C_{1,3} + a_{2,3}C_{2,3} + a_{3,3}C_{3,3} + a_{4,3}C_{4,4}
+$$
+but $a_{1,3}=a_{3,3}=a_{4,3}=0$ and therefore $|\boldsymbol{A}|=5c$.
+
+### A Review Quiz
+
+Consider the matrix 
+$$
+\boldsymbol{A}=\left(\begin{matrix}
+2 & 1 & 3\\
+3 & 2 & 1 \\
+0 & 0 & 4
+\end{matrix}
+\right)
+$$
+```{r quiz1, echo = FALSE}
+quiz(
+  question(
+    "What is $C_{3,3}$?",
+    answer("-1"),
+    answer("1",correct = TRUE),
+    answer("2"),
+    answer("-2"),
+    allow_retry = TRUE
+  ),
+  question(
+    "What is $|\\boldsymbol{A}|$?",
+    answer("4",correct = TRUE),
+    answer("-4"),
+    answer("1"),
+    answer("-1"),
+    allow_retry = TRUE
+  )
+)
+```
+
+## Properties of the Determinant
+
+Let $\boldsymbol{A}$ and $\boldsymbol{B}$ be  $n\times n$ matrices and $\alpha\in\mathbb{R}$.
+
+ - If all elements in a row (or column) of $\boldsymbol{A}$ are 0, then $|\boldsymbol{A}|=0$
+
+ - $|\boldsymbol{A}|=|\boldsymbol{A}^t|$: the determinant of a matrix is equal to the determinant of its transpose;
+
+ - $|\boldsymbol{A}\boldsymbol{B}|=|\boldsymbol{A}||\boldsymbol{B}|$: the determinant of a product is the product of the determinants;
+
+ - $|\alpha\boldsymbol{A}|=\alpha^n|\boldsymbol{A}|$
+
+ - $|\boldsymbol{I}|=1$: the determinant of the identity matrix is one;
+
+ - If $\boldsymbol{A}$ is triangular (or diagonal) $|\boldsymbol{A}|=\prod_{i=1}^na_{i,i}$: the determinant of a triangular matrix is equal to the product of the elements on the diagonal;
+
+### An example
+Compute the determinant of the following matrix
+$$
+\boldsymbol{A}=\left(
+\begin{matrix}
+a_1-x& a_2 & a_3 & a_4\\
+0 & -x & 0 & 0 \\
+0 & 1 & -x &0 \\
+0 & 3 & 1 & -x
+\end{matrix}
+\right)
+$$
+Computing this determinant can be challenging if we do not pick the right expansion, but, if we do, then it becomes very simple. A smart choice is to pick the first column so that 
+$$
+|\boldsymbol{A}|= (a_1-x)(-1)^{1+1}\det\left(\begin{matrix}-x&0&0\\1&-x&0\\ 3 & 1 & -x\end{matrix}\right)
+$$
+Notice that next we need to compute the determinant of a lower triangular matrix, which is simply equal to the product of the diagonal entries. So
+$$
+|\boldsymbol{A}|=(a_1-x)(-x)^3
+$$
+
+### A Review Quiz
+
+Try using the properties of determinants when answering the questions below.
+
+```{r quiz2, echo = FALSE}
+quiz(
+  question(
+    "What is the determinant of $\\left(\\begin{matrix} 1 & 0 &0 \\\\ 2 & 2 & 1 \\\\ 3 & 0 & 4 \\end{matrix}\\right)$?",
+    answer("0"),
+    answer("2"),
+    answer("6"),
+    answer("8",correct = TRUE),
+    allow_retry = TRUE
+  ),
+  question(
+    "What is the determinant of $\\left(\\begin{matrix} 1 & 2 &1 \\\\ 0 & 0 & 3 \\\\ 0 & 0 & 1 \\end{matrix}\\right)$?",
+    answer("0",correct = TRUE),
+    answer("2"),
+    answer("6"),
+    answer("8"),
+    allow_retry = TRUE
+  ),
+    question(
+    "What is the determinant of $\\left(\\begin{matrix} 1 & 0 \\\\ 0 & 2  \\end{matrix}\\right)\\left(\\begin{matrix} 2 & 1 \\\\ 1 & 2  \\end{matrix}\\right)$?",
+    answer("0"),
+    answer("2"),
+    answer("6",correct = TRUE),
+    answer("8"),
+    allow_retry = TRUE
+  )
+)
+```
+
+## Matrix Inverse
+
+![](https://youtu.be/oYvY20Q3-WI)
+
+Given a matrix $\boldsymbol{A}$, we say that $\boldsymbol{A}^{-1}$ is its inverse if 
+
+$$
+\boldsymbol{A}^{-1}\boldsymbol{A}=\boldsymbol{A}\boldsymbol{A}^{-1}=\boldsymbol{I}
+$$
+
+Then $\boldsymbol{A}$ is said to be invertible. Notice that only square matrices can have inverses.  However, not all square matrices have an inverse. The inverse exists if and only if $det(\boldsymbol{A}) \neq 0$. If an inverse exists, this is unique.
+
+### An Exercise
+Show that $\boldsymbol{A}$ and $\boldsymbol{X}$ are inverse of each other.
+$$
+\boldsymbol{A}=\left(
+\begin{matrix}
+5 & 6 \\
+5 & 10
+\end{matrix}
+\right)\;\;\;\;
+\boldsymbol{X}=\left(
+\begin{matrix}
+1/2 & -3/10\\
+-1/4 & 1/4
+\end{matrix}
+\right)
+$$
+
+The way to solve this is by either computing $\boldsymbol{A}\boldsymbol{X}$ or $\boldsymbol{X}\boldsymbol{A}$ and noticing that it equals $\boldsymbol{I}$.
+$$
+\boldsymbol{A}\boldsymbol{X}=\left(
+\begin{matrix}
+5 & 6 \\
+5 & 10
+\end{matrix}
+\right)\left(
+\begin{matrix}
+1/2 & -3/10\\
+-1/4 & 1/4
+\end{matrix}
+\right)= \left(
+\begin{matrix}
+5\cdot 1/2 - 6\cdot 1/4 & - 5\cdot 3/10 + 6\cdot 1/4 \\
+5\cdot 1/2 - 10\cdot 1/4 & -5\cdot 3/10 + 10\cdot 1/4
+\end{matrix}
+\right)=
+\left(
+\begin{matrix}
+1 & 0\\
+0 & 1
+\end{matrix}
+\right)=
+$$
+
+### Properties of the Inverse 
+
+Let $\boldsymbol{A}$ and $\boldsymbol{B}$ be invertible $n\times n$ matrices. Then
+
+ - $\boldsymbol{A}^{-1}$ is invertible and $(\boldsymbol{A}^{-1})^{-1}=\boldsymbol{A}$: the inverse of the inverse of a matrix is the matrix itself;
+
+ -  $\boldsymbol{A}\boldsymbol{B}$ is invertible and $(\boldsymbol{A}\boldsymbol{B})^{-1}=\boldsymbol{B}^{-1}\boldsymbol{A}^{-1}$: the inverse of a product is the product of the inverses in reverse order;
+
+ - The transpose $\boldsymbol{A}^t$ is invertible and $(\boldsymbol{A}^t)^{-1}=(\boldsymbol{A}^{-1})^t$: the inverse of a transpose is the transpose of the inverse;
+ 
+- $(c\boldsymbol{A})^{-1}=c^{-1}\boldsymbol{A}^{-1}$ for $c\neq 0$.
+
+### Computing the inverse of a $2\times 2$ matrix
+
+Provided that $|\boldsymbol{A}|\neq 0$,
+$$
+\boldsymbol{A}=\left(
+\begin{matrix}
+a & b\\
+c& d
+\end{matrix}
+\right)
+\longrightarrow
+\boldsymbol{A}^{-1}=\frac{1}{ad-bc}\left(
+\begin{matrix}
+d& -b\\
+-c & a
+\end{matrix}
+\right)
+$$
+
+### Computing the inverse of a matrix
+
+Any $n\times n$ square matrix $\boldsymbol{A}$ has an inverse $\boldsymbol{A}^{-1}$ given by
+$$
+\boldsymbol{A}^{-1}=\frac{1}{|\boldsymbol{A}|}\mbox{adjoint}(\boldsymbol{A}),
+$$
+with 
+$$
+\mbox{adjoint}(\boldsymbol{A})=\left(
+\begin{matrix}
+C_{1,1} & C_{2,1} & \cdots & C_{n,1}\\
+C_{1,2} & C_{2,2} & \cdots & C_{n,2}\\
+\vdots & \vdots & \vdots & \vdots\\
+C_{1,n} & C_{2,n}& \cdots & C_{n,n}
+\end{matrix}
+\right)
+$$
+where $C_{i,j}$ is the $(i,j)$ cofactor.
+
+
+```{r quiz3, echo = FALSE}
+quiz(
+  question(
+    "Which of the following matrices are invertible?",
+    answer("$\\left(\\begin{matrix} 1 & 0 \\\\ 0 & 1  \\end{matrix}\\right)$",correct = TRUE),
+    answer("$\\left(\\begin{matrix} 1 & 0 \\\\ 2 & 0  \\end{matrix}\\right)$"),
+    answer("$\\left(\\begin{matrix} 0 & 0 \\\\ 0 & 0  \\end{matrix}\\right)$"),
+    answer("$\\left(\\begin{matrix} 1 & 2 \\\\ -1 & 2  \\end{matrix}\\right)$",correct = TRUE),
+    allow_retry = TRUE
+  ),
+ question(
+    "What's the inverse of $\\boldsymbol{I}$?",
+    answer("$\\left(\\begin{matrix} 1 & 0 \\\\ 0 & 1  \\end{matrix}\\right)$",correct = TRUE),
+    answer("$\\left(\\begin{matrix} 1 & 0 \\\\ 2 & 0  \\end{matrix}\\right)$"),
+    answer("$\\left(\\begin{matrix} 0 & 0 \\\\ 0 & 0  \\end{matrix}\\right)$"),
+    answer("$\\left(\\begin{matrix} 1 & 2 \\\\ -1 & 2  \\end{matrix}\\right)$"),
+    allow_retry = TRUE
+ )
+)
+```
+
+## Minors and Rank
+
+### Submatrices 
+
+A submatrix of $\boldsymbol{A}$ is a matrix obtained by deleting some rows and/or some columns.
+
+Consider for instance the matrix:
+$$ 
+\left(\begin{matrix}
+12 & 1 & -7 & 0.5 \\
+\frac{3}{4} & -4 & 8 & 1\\
+	0 & -2 & \frac{-2}{7} & 9
+		\end{matrix}\right)
+$$
+Then 
+
+ - $(12)$ is the submatrix obtained by deleting the second and third row and the second, the third and fourth column.
+ 
+ - $(-4, 1)$ is the submatrix obtained by deleting the first and the third row and the first and third column.
+
+### Minors 
+
+A minor of a matrix $\boldsymbol{A}$ is the determinant of a square submatrix of $\boldsymbol{A}$. The minor is of *order* $k$ if it is the determinant of a submatrix $k\times k$.
+
+Consider for example:
+
+$$ 
+A= \left( \begin{matrix}
+		1 & 3 & 0 \\
+		4 & 2 & 1 \\
+		5 & 0 & 4 
+	\end{matrix} \right)
+$$
+
+ - $\det(1)=1$ is a minor of order $1$, as well as $3,0,4,2,\ldots$
+
+ - $\det\left( \begin{matrix} 1 & 3 \\ 4 & 2 \end{matrix}  \right)= -10$ is a minor of order $2$
+
+ -  $\det\left( \begin{matrix} 4 & 1 \\ 5 & 4 \end{matrix}  \right)= 11$ is a minor of order 2. 
+
+- $\det(\boldsymbol{A})$ is the only minor of order 3.
+
+### Rank
+
+The rank of a matrix is the order of the largest non-zero minor. The rank of $\boldsymbol{A}$ is denoted as $rank(\boldsymbol{A})$.
+
+
+- $1 \leq rank(A) \leq \max\{m,n\}$ for all $m\times n$ matrices different from $\boldsymbol{0}$
+
+- Let $\boldsymbol{A}$ be a $n\times n$ matrix. If $|\boldsymbol{A}|\neq 0$ then $rank(\boldsymbol{A})=n$. Furthermore, the matrix $\boldsymbol{A}$ is invertible if and only if it has rank $n$.
+	
+```{r quiz4, echo = FALSE}
+quiz(
+  question("What is the rank of $\\boldsymbol{I}$ of size 2?",
+           answer("0"),
+           answer("1"),
+           answer("2",correct = TRUE),
+           answer("3"),
+           allow_retry=TRUE
+             ),
+  question("What is the rank of a $2\\times 2$ matrix with all zeros?",
+           answer("0",correct = TRUE),
+           answer("1"),
+           answer("2"),
+           answer("3"),
+           allow_retry=TRUE),
+  question("What is the rank of $\\left(\\begin{matrix} 1 & 1 \\\\ 0 & 0 \\end{matrix}\\right)$?",
+           answer("0"),
+           answer("1",correct = TRUE),
+           answer("2"),
+           answer("3"),
+           allow_retry=TRUE)
+)
+```
+
+## Eigenvalues and Eigenvectors
+
+A different set of numbers that summarize properties of a squared matrix are the so-called *eigenvalues*. These are used widely in many real-world applications, including 
+
+ - Google PageRank algorithms
+ 
+ - PCA dimensionality reduction
+ 
+ - Probabilistic models
+
+The vector $\boldsymbol{v}$ is an eigenvector of the $n\times n$ matrix $\boldsymbol{A}$ if
+		
+$$ 
+\boldsymbol{A}\boldsymbol{v} = \lambda \boldsymbol{v}
+$$ 
+		where $\lambda \in \mathbb{R}$ is an eigenvalue. 
+		
+### Computing eigenvalues
+
+The eigenvalues of $\boldsymbol{A}$ are the solution to the equation
+$$
+p(\lambda)=det(\boldsymbol{A}-\lambda\boldsymbol{I})=0,
+$$
+
+where $p(\lambda)$ is the *characteristic polynomial*.
+
+Let's look at an example. Consider the matrix
+
+$$
+\boldsymbol{A} = \left(\begin{matrix} -1 &  2 \\ 3 &0   \end{matrix}  \right) 
+$$
+We need to solve the equation
+
+$$
+\det(\boldsymbol{A}-\lambda \boldsymbol{I}) = 
+		\det\left( \begin{matrix} 
+			-1 -\lambda & 2 \\ 3 & -\lambda  
+		\end{matrix}\right) = 0 
+$$
+which, using the rules for determinants, is
+$$
+\lambda^2 + \lambda - 6 = 0  
+$$
+and therefore
+$$   
+\lambda_1 = -3 \quad \lambda_2 = 2 
+$$  
+		
+### Computing eigenvectors
+
+Once an eigenvalue $\lambda$ is found, it is possible to find the associated eigenvectors by solving
+$$
+\boldsymbol{A}\boldsymbol{v} = \lambda \boldsymbol{v} 
+$$
+
+Notice that there is an infinite number of eigenvectors associated to each eigenvalue (this will become apparent below).
+
+Let's find the eigenvectors associated to the eigenevalue $2$ of the previous example. We have to solve
+$$
+\left(\begin{matrix} -1 &  2 \\ 3 &0   \end{matrix}  \right)
+			\left(\begin{matrix} v_1 \\ v_2 \end{matrix}\right) =
+			   2 \left(\begin{matrix} v_1 \\ v_2 \end{matrix}\right)
+$$
+which is a linear system of two equations with two unknowns,
+$$
+\left\{ \begin{matrix} -v_1 + 2 v_2 = 2v_1 \\
+		3v_1 = 2v_2 \end{matrix} \right.
+$$  
+transformed to,
+$$
+\left\{ \begin{matrix} -3v_1 + 2 v_2 = 0  \\
+		3v_1  -  2v_2 = 0 \end{matrix} \right.
+$$  
+The two equations are equal and therefore we are left with one only
+$$
+3v_1  -  2v_2 = 0
+$$
+whose solutions different from zero are,
+$$
+v_2 = \frac{3}{2} v_1 
+$$
+So \textbf{one} solution is  
+$$
+v_1 = 2 , v_2 = 3 
+$$
+Let's check,
+$$
+\left(\begin{matrix} -1 &  2 \\ 3 &0   \end{matrix}  \right)
+			\left(\begin{matrix} 2 \\ 3 \end{matrix}\right)=
+		\left(\begin{matrix} -2 + 6 \\ 6  \end{matrix}\right)=
+			\left(\begin{matrix} 4 \\ 6 \end{matrix}\right)=
+			2\left(\begin{matrix} 2 \\ 3 \end{matrix}\right)
+$$
+
+All possible eigenvectors (with eigenvalue 2) can be written as
+$$
+\left(\begin{matrix} 2t \\ 3t \end{matrix}\right) 
+			\quad t \in \mathbb{R}
+$$
+So the following are also eigenvectors
+$$
+(-2, -3), (4,6) , (2\pi, 3\pi), (-20,-30), ...
+$$
+
+
+```{r quiz5, echo=FALSE}
+quiz(
+  question("Which of the following is an eigenvalue of $\\boldsymbol{I}$ of size 2?",
+         answer("0"),
+         answer("1",correct=TRUE),
+         answer("2"),
+         answer("3"),
+         allow_retry = TRUE),
+question("Which of the following are eigenvectors of $\\boldsymbol{I}$ of size 2?",
+         answer("(0,1)",correct = TRUE),
+         answer("(1,0)",correct = TRUE),
+         answer("(2,2)",correct= TRUE),
+         answer("(1,2)",correct = TRUE),
+         allow_retry = TRUE
+)
+)
+         
+```
+
+## Matrix Factorizations
+
+A factorization of a matrix $\boldsymbol{A}$ is a way to write $\boldsymbol{A}$ as a product of matrics, simpler or with some specific characteristics
+
+ - Useful to compute the determinant 
+ 
+ - To compute the matrix inverse $\boldsymbol{A}^{-1}$ 
+
+ - To solve linear systems of equations
+
+ - For any other reason
+ 
+Basically all functions implemented in software to compute the above quantities implicitly exploits such factorizations to speed up computations.
+
+### LU Factorization
+
+If $det(\boldsymbol{A}) \neq 0$ then,	$$ \boldsymbol{A} = \boldsymbol{L}\boldsymbol{U} $$ 
+	where $\boldsymbol{A},\boldsymbol{L},\boldsymbol{U}$ are $n\times n$ matrices, $\boldsymbol{L}$ is lower triangular and 
+	$\boldsymbol{U}$ is upper triangular.
+	
+ - The LU factorization is valid for squared matrices only. It writes a squared matrix as the product of a lower triangular and an upper triangular matrix.
+ 
+ - The matrices $\boldsymbol{L},\boldsymbol{U}$ are unique for every $\boldsymbol{A}$   
+
+ - If $ \boldsymbol{A} = \boldsymbol{L}\boldsymbol{U} $ then it is very easy to compute the determinant. This is because the determinant of a product is the product of the determinants and the determinant of a triangular matrix is just the product of its diagonal entries.
+ 
+### Cholesky Factorization
+
+If $\boldsymbol{A} = \boldsymbol{A}^t$ and $\boldsymbol{A}$ is positive-definite,then
+	 $$ \boldsymbol{A} = \boldsymbol{L}\boldsymbol{L}^t$$
+	 where $\boldsymbol{L}$ is lower triangular.
+	 
+ - Cholesky factorization only applies to symmetric (thus squared) matrices which have the additional property of being positive-semidefinite.
+ 
+ - A symmetric matrix $\boldsymbol{A}$ is said to be positive-definite if for all non-zero column vectors $\boldsymbol{x}$, $\boldsymbol{x}^t\boldsymbol{A}\boldsymbol{x}>0$.
+ 
+ - The property of positive-semidefiniteness and Cholesky factorizations are widely used in statistics.
+
+### Matrix Diagonalization
+
+A $n\times n$ matrix $\boldsymbol{A}$ is diagonalizable if there exist an invertible $n\times n$ matrix $\boldsymbol{P}$ and a $n\times n$ diagonal matrix	 $\boldsymbol{D}$ such that
+		$$  \boldsymbol{A} = \boldsymbol{P}\boldsymbol{D}\boldsymbol{P}^{-1} $$
+
+ - The elements on the diagonal of $\boldsymbol{D}$ are the eigenvalues
+
+ - The columns of $\boldsymbol{P}$ are the eigenvectors
+ 
+ - Not all matrices are diagonalizable 
+ 
+ - If $\boldsymbol{A}$ is symmetric then it is diagonalizable 
+
+	
