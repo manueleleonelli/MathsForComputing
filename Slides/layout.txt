@@ -1,0 +1,25 @@
+\usepackage{tikz}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{bm}
+\newtheorem{ej}{Ejemplo}
+\institute[VIU]{School of Human Sciences and Technology, IE University}
+\definecolor{orangeVIU}{RGB}{232, 86, 15}
+\definecolor{blueVIU}{RGB}{14, 159, 232}
+\definecolor{yellowVIU}{RGB}{232, 196, 14} 
+\definecolor{redVIU}{RGB}{232, 14, 14}
+\setbeamercolor{title}{bg=orangeVIU, fg=white}
+\setbeamercolor{subttile}{bg=ornageVIU. fg=white}
+\setbeamercolor{frametitle}{bg=orangeVIU, fg=white}
+\setbeamercolor{block title}{bg=blueVIU, fg=white}
+\setbeamercolor{block title alerted}{bg=redVIU, fg=white}
+\setbeamercolor{block title example}{bg=yellowVIU, fg=white}
+\setbeamercolor{footline}{bg=gray, fg=black}
+\setbeamertemplate{footline}{
+         \includegraphics[scale=0.2]{logo.png}
+\insertframenumber/\inserttotalframenumber
+	}
+
+
+\beamertemplatenavigationsymbolsempty
