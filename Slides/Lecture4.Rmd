@@ -1,0 +1,158 @@
+---
+title: "Maths for Computing"
+subtitle: "Lecture 3: The inverse of a matrix"
+author: Manuele Leonelli
+date: 
+output:
+  beamer_presentation:
+    theme: "boxes"
+    colortheme: "crane"
+    includes:
+      in_header: layout/layout.txt
+---
+
+
+## Today's Objective
+
+ - Introduce functions
+ - Define various components of a function
+ - Discuss properties of functions
+
+
+
+
+## Inverse Matrix
+Given a matrix $\bm{A}$, we say that $\bm{A}^{-1}$ is its inverse if 
+\[
+\bm{A}^{-1}\bm{A}=\bm{A}\bm{A}^{-1}=\bm{I}
+\]	
+Then $\bm{A}$ is said to be invertible.
+
+Only square matrices can have inverses.
+
+
+\begin{alertblock}{Inverse}
+Not all square matrices have an inverse. The inverse exists if and only if $det(\bm{A}) \neq 0$. If an inverse exists, this is unique.
+\end{alertblock}
+
+
+
+
+## Exercise
+Show that $\bm{A}$ and $\bm{X}$ are inverse of each other.
+\[
+\bm{A}=\left(
+\begin{matrix}
+5 & 6 \\
+5 & 10
+\end{matrix}
+\right)\;\;\;\;
+\bm{X}=\left(
+\begin{matrix}
+1/2 & -3/10\\
+-1/4 & 1/4
+\end{matrix}
+\right)
+\]
+
+
+## Properties of the Inverse
+Let $\bm{A}$ and $\bm{B}$ be invertible $n\times n$ matrices. Then
+\begin{itemize}
+\item $\bm{A}^{-1}$ is invertible and $(\bm{A}^{-1})^{-1}=\bm{A}$
+\item $\bm{A}\bm{B}$ is invertible and $(\bm{A}\bm{B})^{-1}=\bm{B}^{-1}\bm{A}^{-1}$
+\item The transpose $\bm{A}^t$ is invertible and $(\bm{A}^t)^{-1}=(\bm{A}^{-1})^t$ 
+\item $(c\bm{A})^{-1}=c^{-1}\bm{A}^{-1}$ for $c\neq 0$.
+\end{itemize}
+
+
+
+
+## Computing the Inverse of a 2 by 2 Matrix
+Provided that $|\bm{A}|\neq 0$,
+
+\[
+\bm{A}=\left(
+\begin{matrix}
+a & b\\
+c& d
+\end{matrix}
+\right)
+\longrightarrow
+\bm{A}^{-1}=\frac{1}{ad-bc}\left(
+\begin{matrix}
+d& -b\\
+-c & a
+\end{matrix}
+\right)
+\]
+
+
+
+
+## Computing the Inverse
+Any $n\times n$ square matrix $\bm{A}$ has an inverse $\bm{A}^{-1}$ given by
+\[
+\bm{A}^{-1}=\frac{1}{|\bm{A}|}\mbox{adjoint}(\bm{A}),
+\]
+with 
+\[
+\mbox{adjoint}(\bm{A})=\left(
+\begin{matrix}
+C_{1,1} & C_{2,1} & \cdots & C_{n,1}\\
+C_{1,2} & C_{2,2} & \cdots & C_{n,2}\\
+\vdots & \vdots & \vdots & \vdots\\
+C_{1,n} & C_{2,n}& \cdots & C_{n,n}
+\end{matrix}
+\right)
+\]
+where $C_{i,j}$ is the $(i,j)$ cofactor.
+
+
+
+## Minor of a Matrix
+A submatrix of $\bm{A}$ is a matrix obtained by deleting some rows and/or some columns.
+
+$$
+\left(\begin{matrix}
+		12 & 1 & -7 & 0.5 \\
+		\frac{3}{4} & -4 & 8 & 1\\
+		0 & -2 & \frac{-2}{7} & 9
+	\end{matrix} \right)
+$$
+
+\begin{block}{Minor}
+	A minor of a matrix $\bm{A}$ is the determinant of a square submatrix of $\bm{A}$.
+\end{block}
+	The minor is of \emph{order} $k$ if it is the determinant of a submatrix $k\times k$.
+
+
+## Example
+$$ 
+A= \left( \begin{matrix}
+		1 & 3 & 0 \\
+		4 & 2 & 1 \\
+		5 & 0 & 4 
+	\end{matrix} \right)
+$$
+	Some minors:
+	\begin{itemize}
+		\item $\det(1)=1$ is a minor of order $1$, as well as $3,0,4,2,\ldots$
+		\item $\det\left( \begin{matrix} 1 & 3 \\ 4 & 2 \end{matrix}  \right)
+				= -10$ is a minor of order $2$
+			\item $\det\left( \begin{matrix} 4 & 1 \\ 5 & 4  \end{matrix}\right)= ... $ is a minor of order 2. 
+				\item $\det(A)$ is the only minor of order 3.
+	\end{itemize}
+
+## Rank
+
+\begin{block}{Rank}
+The rank of a matrix is the order of largest non-zero minor. The rank of $\bm{A}$ is denoted as $rank(\bm{A})$.
+\end{block}
+\begin{alertblock}{Properties}
+		\begin{itemize}
+			\item $1 \leq rank(A) \leq \max\{m,n\}$ for all $m\times n$ matrices different from $\bm{0}$
+			\item Let $\bm{A}$ be a $n\times n$ matrix. If $|\bm{A}|\neq 0$ then $rank(\bm{A})=n$
+		\end{itemize}
+\end{alertblock}
+

@@ -1,0 +1,340 @@
+---
+title: "Maths for Computing"
+subtitle: "Lecture 3: Introduction to Matrices"
+author: Manuele Leonelli
+date: 
+output:
+  beamer_presentation:
+    theme: "boxes"
+    colortheme: "crane"
+    includes:
+      in_header: layout/layout.txt
+---
+
+
+## Today's Objective
+
+ - Introduce functions
+ - Define various components of a function
+ - Discuss properties of functions
+
+
+
+## Matrices
+A matrix is a table of real numbers. We say that a matrix has dimension  $n \times m$ if it has $n$ rows and $m$ columns.
+$$
+\bm{A} = \left(   
+	\begin{matrix}
+		a_{1,1} & a_{1,2} & \ldots & a_{1,m} \\
+		a_{2,1} & a_{2,2} & \ldots & a_{2,m} \\
+		\ldots & \ldots & \ldots & \ldots \\
+		a_{n,1} & a_{n,2} & \ldots & a_{n,m} \\
+	\end{matrix}
+	\right)
+$$
+$\bm{A}$ is often expressed as $\bm{A}=(a_{i,j})_{n\times m}$ or simply $\bm{A}=(a_{i,j})$ where $a_{i,j}$ is the element of $\bm{A}$ in the $i$-th row and $j$-th column.
+
+A vector is a matrix with only one row (**row vector**) or only one column (**column vector**). Vectors are usually denoted by small bold letters like $\bm{x}$ or $\bm{y}$.
+
+
+
+## Exercise
+\begin{exampleblock}{}
+Construct the $4\times 3$ matrix $\bm{A}=(a_{i,j})_{4\times 3}$ with $a_{i,j}=2i-j$.
+\end{exampleblock}
+
+## Exercise
+\begin{exampleblock}{}
+Construct the $4\times 3$ matrix $\bm{A}=(a_{i,j})_{4\times 3}$ with $a_{i,j}=2i-j$.
+\[
+\bm{A} = \left(   
+	\begin{matrix}
+		1 & 0 & -1 \\
+		3 &  2 & 1 \\
+		5 & 4 & 3
+	\end{matrix}
+	\right)
+\]
+\end{exampleblock}
+
+## Some Special Matrices
+\begin{itemize}
+\item
+The \emph{zero matrix} $\bm{0}$ denotes the $n\times m$ matrix consisting of only zeros
+
+\item A \emph{square} matrix has $n=m$, i.e. same number of rows and columns
+
+\item In a square matrix $\bm{A}=(a_{i,j})_{n\times n}$, the elements $a_{1,1},a_{2,2},\dots,a_{n,n}$ constitute the \emph{main diagonal}
+
+\item A square matrix  $\bm{A}=(a_{i,j})_{n\times n}$ is \emph{symmetric} if $a_{i,j}=a_{j,i}$ for all $i\neq j$, i.e. it is symmetric about the main diagonal
+
+\item The \emph{identity matrix} of order $n$ denoted by $\bm{I}_{n}$ or simply $\bm{I}$ is the $n\times n$ matrix having ones along the main diagonal and zeros elsewhere.
+
+\item A square matrix is called \emph{lower triangular} (or upper) if the elements above (or below) the main diagonal are zero.
+
+\end{itemize}
+
+
+## Examples
+$$
+I_3 = \left(\begin{matrix} 
+           1 & 0 & 0 \\
+		0 & 1 & 0 \\
+		0 & 0 & 1 
+	\end{matrix}\right) 
+$$
+$$
+L = \left(\begin{matrix} 
+           * & 0 & 0 \\
+		* & * & 0 \\
+		* & * & * 
+	\end{matrix}\right)   
+$$
+
+$$
+U = \left(\begin{matrix} 
+           * & * & * \\
+		0 & * & * \\
+		0 & 0 & * 
+	\end{matrix}\right)  
+$$
+
+
+
+## Matrix addition and multiplication by a scalar
+Consider two matrices $\bm{A}=(a_{i,j})_{n\times m}$ and $\bm{B}=(b_{i,j})_{n\times m}$.
+\begin{itemize}
+\item $\bm{A}$ and $\bm{B}$ are said to be of the same order (same dimension)
+\item $\bm{A}=\bm{B}$ if $a_{i,j}=b_{i,j}$ for all $i$ and $j$. Otherwise $\bm{A}\neq \bm{B}$.
+\item The sum $\bm{A}+\bm{B}$ is defined as
+\[
+\bm{A}+\bm{B}=(a_{i,j}+b_{i,j})_{n\times m}
+\]
+\item If $\alpha\in \mathbb{R}$
+\[
+\alpha\bm{A}=(\alpha a_{i,j})_{n\times m}
+\]
+\end{itemize}
+
+
+##  Properties of summation and multiplication by scalar
+Let $\bm{A}$, $\bm{B}$ and $\bm{C}$ be $n\times m$ matrices and let $\alpha,\beta\in \mathbb{R}$.
+\begin{itemize}
+\item $(\bm{A}+\bm{B})+\bm{C}=\bm{A}+(\bm{B}+\bm{C})$
+\item $\bm{A}+\bm{B}=\bm{B}+\bm{A}$
+\item $\bm{A}+\bm{0}=\bm{A}$
+\item $\bm{A}+(-1)\bm{A}=\bm{0}$
+\item $(\alpha+\beta)\bm{A}=\alpha \bm{A}+\beta\bm{A}$
+\item $\alpha(\bm{A}+\bm{B})=\alpha\bm{A}+\alpha\bm{B}$
+\end{itemize}
+
+
+
+## Matrix Product
+ \begin{alertblock}{Compatible Matrices}
+  The product of two matrices $\bm{A}$ and $\bm{B}$, denoted as $\bm{A}\bm{B}$ can be defined if the dimensions of the two matrices are $m \times n$ ($\bm{A}$) and $n \times p$ ($\bm{B}$), i.e. the number of columns of $\bm{A}$ is the same as the number of rows of $\bm{B}$.
+ \end{alertblock}
+
+Call $\bm{C}=\bm{A}\bm{B}$, then $\bm{C}$ is $m\times p$ matrix $\bm{C}=(c_{i,j})_{m\times p}$ with entries
+\[
+c_{i,j}=\sum_{r=1}^n a_{i,r}b_{r,j}=a_{i,1}b_{1,j}+a_{i,2}b_{2,j}+\cdots+a_{i,n}b_{n,j}
+\]
+
+
+\vspace{0.3cm}
+
+Notice that if $\bm{A}\bm{B}$ exists, it does not follow that $\bm{B}\bm{A}$ does as well.
+
+
+
+## Example
+
+\begin{alertblock}{}
+	It is often called row-column product
+\end{alertblock}
+\Large
+	$$\left( \begin{matrix}
+    1 & 0 & 1 \\
+		-2 & 1 & 3 
+	\end{matrix} \right)\left(\begin{matrix}
+		1 & 2 \\
+		0 & -2 \\
+		1 & -1 
+	\end{matrix}\right) = \left( \begin{matrix}
+		2 & 1 \\
+		1 & -7	
+\end{matrix}\right)
+	$$
+
+
+## Exercise 
+\begin{exampleblock}{}
+Consider the following 2 matrices $\bm{A}$ and $\bm{B}$. Compute $\bm{C}=\bm{A}\bm{B}$. Is $\bm{B}\bm{A}$ defined?
+\[\bm{A}=
+\left(\begin{matrix}
+0 & 1 & 2\\
+2 & 3 &1 \\
+4 & -1 & 6
+\end{matrix}\right)\;\;\;\;
+\bm{B}=\left(
+\begin{matrix}
+3 & 2 \\ 1& 0\\ -1 & 1
+\end{matrix}
+\right)
+\]
+\end{exampleblock}
+
+## Exercise 
+\begin{exampleblock}{}
+Consider the following 2 matrices $\bm{A}$ and $\bm{B}$. Compute $\bm{C}=\bm{A}\bm{B}$. Is $\bm{B}\bm{A}$ defined?
+\[\bm{A}=
+\left(\begin{matrix}
+0 & 1 & 2\\
+2 & 3 &1 \\
+4 & -1 & 6
+\end{matrix}\right)\;\;\;\;
+\bm{B}=\left(
+\begin{matrix}
+3 & 2 \\ 1& 0\\ -1 & 1
+\end{matrix}
+\right)
+\]
+\[
+\bm{C}=\left(\begin{matrix}
+-1 & 2\\ 8 & 5 \\ 5 & 14
+\end{matrix}\right)
+\]
+\[
+\bm{B}\bm{A} \mbox{ is not defined}
+\]
+\end{exampleblock}
+
+## Powers of Matrices
+If $\bm{A}$ is a square matrix, because of associativity we can write $\bm{A}\bm{A}=\bm{A}^2$ and $\bm{A}\bm{A}\bm{A}=\bm{A}^3$, and so on. In general
+\[
+\bm{A}^n=\underbrace{\bm{A}\bm{A}\cdots\bm{A}}_{n\, times}
+\]
+
+## Transpose
+The transpose matrix is the matrix where row and columns are interchanged.
+
+ If $\bm{A}=(a_{i,j})_{n\times m}$ then its transpose $\bm{A}^t=(a_{i,j}^t)_{m\times n}$.
+
+ The (i,j) element of $\bm{A}$ is equal to the (j,i) element of $\bm{A}^t$, i.e. $a_{i,j}=a_{j,i}^t$.
+
+
+\begin{exampleblock}{Example}
+         $$ A = \left(\begin{matrix} 
+		 -1 & 3 & 2 \\
+		 7 & -3 & 6 
+	 \end{matrix}\right)$$
+		$$ A^t = \left( \begin{matrix}
+                 -1 & 7 \\
+		  3 & -3 \\
+		 2 & 6	
+		\end{matrix}\right)$$
+\end{exampleblock}
+
+
+## The Determinant of Order 2
+The determinant is a number associated to any square matrix.
+	\begin{block}{$2 \times 2$} 
+            $$det(\bm{A})= |\bm{A}| = det\left( \begin{matrix}
+		    a & b \\
+		    c & d
+	    \end{matrix}\right) = ad - bc $$
+	\end{block}
+
+## The Determinant of Order 3
+\begin{block}{$3 \times 3$}
+		$$ det\left(\begin{matrix}
+		  a_{1,1} & a_{1,2} & a_{1,3} \\
+		  a_{2,1} & a_{2,2} & a_{2,3} \\
+		  a_{3,1} & a_{3,2} & a_{3,3} 
+		\end{matrix} \right) = $$
+		$$ a_{1,1}a_{2,2}a_{3,3} + a_{1,2}a_{2,3}a_{3,1} + 
+		a_{2,1}a_{3,2}a_{1,3} 
+		$$
+		$$
+		-(a_{1,3}a_{2,2}a_{3,1} + a_{1,2}a_{2,1}a_{3,3} + 
+		a_{1,1}a_{3,2}a_{2,3})$$ 
+\end{block}
+This already gets messy!!
+
+
+## Expansion by Cofactors
+\begin{align*}
+|\bm{A}|&=\left|\begin{matrix}
+a_{1,1}& a_{1,2} & a_{1,3}\\
+a_{2,1}& a_{2,2} & a_{2,3}\\
+a_{3,1}& a_{3,2} & a_{3,3}
+\end{matrix}\right|\\
+&=
+a_{1,1}\left|\begin{matrix}a_{2,2}& a_{2,3}\\a_{3,2}& a_{3,3}\end{matrix}\right|-a_{1,2}\left|\begin{matrix}a_{2,1}& a_{2,3}\\a_{3,1}& a_{3,3}\end{matrix}\right|+a_{1,3}\left|\begin{matrix}a_{2,1}& a_{2,2}\\a_{3,1}& a_{3,2}\end{matrix}\right|
+\end{align*}
+\begin{itemize}
+\item Cofactor 1 is determined by deleting the first row and the first column
+\item Cofactor 2 is determined by deleting the first row and the second column
+\item Cofactor 3 is determined by deleting the first row and the third column
+\end{itemize}
+
+
+## General Rule for Determinants
+Let $\bm{A}$ be a $n\times n$ matrix.
+
+The expansion of $|\bm{A}|$ in terms of the elements of the ith row is given by
+\[
+|\bm{A}|=a_{i,1}C_{i,1}+a_{i,2}C_{i,2}+\cdots + a_{i,n}C_{i,n},
+\]
+where $C_{i,j}$ is a \emph{cofactor}.
+
+\vspace{0.3cm}
+
+A cofactor $C_{i,j}$ can be found as follows:
+\begin{itemize}
+\item Delete the i-th row and the j-th column from $\bm{A}$ and compute its determinant
+\item Multiply the determinant by the factor $(-1)^{i+j}$
+\end{itemize}
+
+## Exercise
+Consider the matrix $\bm{A}$
+\[
+\bm{A}=\left(
+\begin{matrix}
+3 & 0 & 0 &2 \\
+6 & 1 & c &2 \\
+-1 & 1 & 0 & 0 \\
+5 & 2 & 0 & 3
+\end{matrix}
+\right)
+\]
+\begin{itemize}
+\item What is $C_{2,3}$?
+\item What is $|\bm{A}|$?
+\end{itemize}
+
+
+## Properties of Determinants
+Let $\bm{A}$ and $\bm{B}$ be  $n\times n$ matrices and $\alpha\in\mathbb{R}$.
+\begin{itemize}
+\item If all elements in a row (or column) of $\bm{A}$ are 0, then $|\bm{A}|=0$
+\item $|\bm{A}|=|\bm{A}^t|$
+\item $|\bm{A}\bm{B}|=|\bm{A}||\bm{B}|$
+\item $|\alpha\bm{A}|=\alpha^n|\bm{A}|$
+\item $|\bm{I}|=1$
+\item If $\bm{A}$ is triangular (or diagonal) $|\bm{A}|=\prod_{i=1}^na_{i,i}$
+\end{itemize}
+
+
+## Exercise
+Compute the determinant of the following matrix
+\[
+\left(
+\begin{matrix}
+a_1-x& a_2 & a_3 & a_4\\
+0 & -x & 0 & 0 \\
+0 & 1 & -x &0 \\
+0 & 3 & 1 & -x
+\end{matrix}
+\right)
+\]

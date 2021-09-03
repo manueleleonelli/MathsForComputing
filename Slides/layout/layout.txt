@@ -17,7 +17,7 @@
 \setbeamercolor{block title example}{bg=yellowVIU, fg=white}
 \setbeamercolor{footline}{bg=gray, fg=black}
 \setbeamertemplate{footline}{
-         \includegraphics[scale=0.2]{logo.png}
+         \includegraphics[scale=0.2]{layout/logo.png}
 \insertframenumber/\inserttotalframenumber
 	}
 

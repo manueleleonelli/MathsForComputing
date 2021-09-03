@@ -1,0 +1,253 @@
+---
+title: "Maths for Computing"
+subtitle: "Lecture 2: Functions"
+author: Manuele Leonelli
+date: 
+output:
+  beamer_presentation:
+    theme: "boxes"
+    colortheme: "crane"
+    includes:
+      in_header: layout/layout.txt
+---
+
+
+## Today's Objective
+
+ - Introduce functions
+ - Define various components of a function
+ - Discuss properties of functions
+
+## Functions
+In many instances we assing to each of a set a particular element of a second set. For example, suppose that each student in a mathematics class is assigned a letter grade from the set $\{A,B,C,D,F\}$. Suppose that the grades are A for Adams, C for Chou, B for Goodfriend, A for Rodriguez and F for Stevens. This assignment is an example of a \emph{function}.
+
+\begin{center}
+\includegraphics[scale=0.8]{img/fun1.png}
+\end{center}
+
+
+## Functions
+\begin{block}{}
+Let $A$ and $B$ be nonempty sets. A \emph{function} $f$ from $A$ to $B$ is an assignment of exactly one element of $B$ to each element of $A$. We write $f(a)=b$ if $b$ is the unique element of $B$ assigned by the function $f$ to the element $a$ of $A$. If $f$ is a function from $A$ to $B$ we write $f:A\rightarrow B$.
+\end{block}
+
+Functions are specified in many different ways. Sometimes we explicitly state the assignments, as in the maths class example. Often we give a formula, such $f(x)=x+1$. Other times we use a computer program to specify a function.
+
+## Functions
+
+\begin{block}{}
+If $f$ is a function from $A$ to $B$ we say that $A$ is the \emph{domain} of $f$ and $B$ is the \emph{codomain} of $f$. If $f(a)=b$ we say that $b$ is the \emph{image} of $a$ and $a$ is the \emph{preimage} of $b$. The \emph{image} of $f$ is the set of all images of elements of $A$. Also, if $f$ is a function from $A$ to $B$ we say that $f$ \emph{maps} $A$ to $B$.
+\end{block}
+
+\begin{center}
+\includegraphics[scale=0.8]{img/fun2.png}
+\end{center}
+
+
+## Examples
+\begin{exampleblock}{}
+\begin{center}
+\includegraphics[scale=0.8]{img/fun1.png}
+\end{center}
+
+\begin{itemize}
+
+\item Domain:
+ 
+\item Codomain:
+ 
+\item Image: 
+ \end{itemize}
+\end{exampleblock}
+
+
+## Examples
+\begin{exampleblock}{}
+\begin{center}
+\includegraphics[scale=0.8]{img/fun1.png}
+\end{center}
+\begin{itemize}
+\item Domain: $\{$ Adams, Chou, Goodfriend, Rodriguez, Stevens$\}$
+ 
+\item Codomain: $\{$ A, B, C, D, F $\}$
+ 
+\item Image: $\{$ A, B, C, F $\}$
+ \end{itemize}
+\end{exampleblock}
+
+
+## Examples
+\begin{exampleblock}{}
+Let $f:\mathbb{Z}\rightarrow \mathbb{Z}$ assign the square of an integer to this integer.
+
+\begin{itemize}
+\item Domain: 
+ 
+\item Codomain:
+ 
+\item Image: 
+ 
+\item Function definition: 
+\end{itemize}
+\end{exampleblock}
+
+## Examples
+\begin{exampleblock}{}
+Let $f:\mathbb{Z}\rightarrow \mathbb{Z}$ assign the square of an integer to this integer.
+\begin{itemize}
+\item Domain: the set of all integers
+ 
+\item Codomain: the set of all integers
+ 
+\item Image: the set of all integers that are perfect squares
+ 
+\item Function definition: $f(x)=x^2$
+\end{itemize}
+\end{exampleblock}
+
+
+
+
+## Real-valued functions
+A function is called \emph{real-valued} if its codomain is the set of real numbers, and it is called \emph{integer-valued} if its codomain is the set of integers. 
+
+\begin{block}{}
+Let $f_1$ and $f_2$ be functions from $A$ to $\mathbb{R}$. Then $f_1+f_2$ and $f_1f_2$ are also functions from $A$ to $\mathbb{R}$ defined for all $x\in A$ by
+\begin{align*}
+(f_1+f_2)(x) &=f_1(x)+f_2(x)\\
+(f_1f_2)(x) & = f_1(x)f_2(x)
+\end{align*}
+\end{block}
+
+
+## Real-Valued Functions
+\begin{exampleblock}{}
+Let $f_1$ and $f_2$ be functions from $\mathbb{R}$ to $\mathbb{R}$ such that $f_1(x)=x^2$ and $f_x(2)=x-x^2$. 
+\begin{itemize}
+\item $(f_1+f_2)(x)=$ 
+\item $(f_1f_2)(x)=$
+\end{itemize}
+\end{exampleblock}
+
+
+## Real-Valued Functions
+\begin{exampleblock}{}
+Let $f_1$ and $f_2$ be functions from $\mathbb{R}$ to $\mathbb{R}$ such that $f_1(x)=x^2$ and $f_x(2)=x-x^2$. 
+\begin{itemize}
+\item $(f_1+f_2)(x)=x$ 
+\item $(f_1f_2)(x)=x^3-x^4$
+\end{itemize}
+\end{exampleblock}
+
+
+
+
+## Injective Functions
+\begin{block}{}
+A function $f$ is said to be \emph{injective} or \emph{one-to-one} if and only if $f(a)=f(b)$ implies that $a=b$ for all $a$ and $b$ in the domain of $f$.
+\end{block}
+
+\begin{center}
+\includegraphics[scale=0.8]{img/fun3}
+\end{center}
+
+
+## Increasing Functions
+\begin{block}{}
+A function $f$ whose domain and codomain are subsets of the set of real numbers is called \emph{increasing} if $f(x)\leq f(y)$, and \emph{strictly increasing} if $f(x)<f(y)$ whenever $x<y$ and $x$ and $y$ are in the domain of $f$.
+
+Similarly, $f$ is called \emph{decreasing} if $f(x)\geq f(y)$, and \emph{strictly decreasing} if $f(x)>f(y)$ whenever $x<y$ and $x$ and $y$ are in the domain of $f$.  
+\end{block}
+
+\begin{block}{}
+A function that is either strictly increasing or strictly decreasing must be one-to-one. 
+
+A function that is increasing, but not strictly increasing, or decreasing, but not strictly decreasing, is not one-to-one.
+\end{block}
+
+
+
+## Surjective Functions
+\begin{block}{}
+A function $f$ from $A$ to $B$ is called \emph{surjective} or \emph{onto} if and only if for every element $b\in B$ there is an element $a\in A$ with $f(a)=b$.
+\end{block}
+
+\begin{center}
+\includegraphics[scale=0.8]{img/fun4.png}
+\end{center}
+
+
+
+## Bijective Functions
+\begin{block}{}
+The function $f$ is \emph{bijective} if it is both one-to-one and onto.
+\end{block}
+
+
+## Bijective Functions
+\begin{block}{}
+The function $f$ is \emph{bijective} if it is both one-to-one and onto.
+\end{block}
+\begin{center}
+\includegraphics[scale=0.45]{img/fun5new.png}
+\end{center}
+
+
+## Bijective Functions
+\begin{block}{}
+The function $f$ is \emph{bijective} if it is both one-to-one and onto.
+\end{block}
+\begin{center}
+\includegraphics[scale=0.45]{img/fun5.png}
+\end{center}
+
+
+
+## Functions
+\begin{exampleblock}{}
+\begin{itemize}
+\item
+Consider the function $f(x)=x^2$ from the set of integers to the set of integers. This is not injective since for instance $f(1)=f(-1)=1$ but $1\neq -1$. It is not surjective since for instance there is no integer $x$ with $x^2=-1$. Therefore is not bijective.
+
+\item Consider the function $f(x)=x+1$ from the set of integers to the set of integers. It is injective since $x+1 \neq y+1$ when $x\neq y$. It is surjective since for every integer $y$ there is an integer $x$ such that $f(x)=y$. Therefore it is bijective.
+
+\item Consider the function $f:A\rightarrow A$, such that $f(x)=x$. This is called \emph{identity} function. It is bijective.
+\end{itemize}
+\end{exampleblock}
+
+
+## Inverse Functions
+\begin{block}{}
+Let $f$ be a bijective function from the set $A$ to the set $B$. The \emph{inverse function} of $f$ is the function that assigns to an element $b$ belonging to $B$ the unique element $a$ in $A$ such that $f(a)=b$. The inverse function of $f$ is denoted by $f^{-1}$. Hence $f^{-1}(b)=a$ when $f(a)=b$. A bijective function is called \emph{invertible} since we can define its inverse.
+\end{block}
+
+\begin{center}
+\includegraphics[scale=0.75]{img/fun6.png}
+\end{center}
+
+
+## Inverse Functions
+\begin{exampleblock}{}
+\begin{itemize}
+\item
+Let $f:\mathbb{Z}\rightarrow \mathbb{Z}$ be such that $f(x)=x+1$. It is invertible since it is bijective. To find the inverse, suppose that $y$ is the image of $x$ so that $y=x+1$. Then $x=y-1$. This means that $y-1$ is the unique element of $\mathbb{Z}$ that is sent to $y$ by $f$. Thus $f^{-1}(y)=y-1$.
+
+\item Let $f:\mathbb{R}\rightarrow \mathbb{R}$ such that $f(x)=x^2$. It is not invertible since it is not bijective. 
+
+\item Let $f:\mathbb{R}_+ \rightarrow \mathbb{R}_+$ such that $f(x)=x^2$. One can show that it is bijective and therefore it is invertible. Its inverse can be derived as $f^{-1}(y)=\sqrt{y}$.
+\end{itemize}
+\end{exampleblock}
+
+
+
+## The Graph of a Function
+\begin{block}{}
+Let $f$ be a function from the set $A$ to the set $B$. The \emph{graph} of the function $f$ is the set of ordered pairs $\{(a,b) | a\in A \mbox{ and } f(a)=b\}$.
+\end{block}
+
+\begin{center}
+\includegraphics[scale=0.5]{img/fun8.png}
+\end{center}
+
+
+## The Graph of a Function
